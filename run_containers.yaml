@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: Create server container
+      docker_container:
+        name: server1
+        image: aos_server
+        networks:
+          - name: mynet
+            aliases:
+              - server
+        ports:
+          - "8080:8000"
+    - name: Create client container
+      docker_container:
+        name: client1
+        image: aos_client_go
+        networks:
+          - name: mynet

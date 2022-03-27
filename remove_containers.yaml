@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Remove container server
+      docker_container:
+        name: server1
+        state: absent
+    - name: Remove container client
+      docker_container:
+        name: client1
+        state: absent
+

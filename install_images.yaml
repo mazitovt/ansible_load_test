@@ -1,0 +1,34 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: copy Server
+      copy:
+        src: ./server
+        dest: /home/vagrant
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+    - name: copy Client
+      copy:
+        src: ./client
+        dest: /home/vagrant
+        owner: vagrant
+        group: vagrant
+        mode: '0644' 
+    - name: build server container image
+      community.docker.docker_image:
+        name: aos_server
+        build:
+          path: /home/vagrant/server
+        source: build
+        state: present
+    - name: build client container image
+      community.docker.docker_image:
+        name: aos_client_go
+        build:
+          path: /home/vagrant/client
+        force_source: yes
+        source: build
+        state: present
