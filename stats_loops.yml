@@ -1,0 +1,42 @@
+---
+- name: DB
+  debug: 
+    msg: "hey: {{ item }}"
+
+- name: Testing started
+  ansible.builtin.shell:
+    cmd: "echo ------ LOAD: {{ item }} clients ------>> log"
+    chdir: /home/tim/logs/
+
+- name: Run a docker stats
+  ansible.builtin.shell:
+    cmd: ./sc.sh
+    chdir: /home/tim/logs/
+  async: 60
+  poll: 0
+  register: stats
+
+- name: Run testing
+  community.docker.docker_container_exec:
+    container: client1
+    command: /bin/bash -c "./rip -concurrent {{ item }} -interval 15 http://server:8000"
+    chdir: /demo_app/app
+  async: 30 
+  poll: 0
+  register: testing
+
+- name: Check on testing_status
+  async_status:
+    jid: "{{ testing.ansible_job_id }}"
+  register: testing_job
+  until: testing_job.finished
+  retries: 100
+  delay: 1
+
+- name: Check on stats_status
+  async_status:
+    jid: "{{ stats.ansible_job_id }}"
+  register: stats_job
+  until: stats_job.finished
+  retries: 100
+  delay: 1

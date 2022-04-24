@@ -1,0 +1,11 @@
+---
+- name: Fetch log
+  hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Fetch log
+      ansible.builtin.fetch:
+        src: /home/tim/logs/log
+        dest: logs/log
+        flat: yes

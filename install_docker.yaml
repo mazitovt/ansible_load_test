@@ -2,8 +2,6 @@
 - hosts: all
   
   become: yes
-  environment: 
-    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/vagrant/.local/lib/python3.6/site-packages"
   tasks:
 
   # Install Docker
@@ -39,7 +37,7 @@
       update_cache: yes
 
   - name: add userpermissions
-    shell: "usermod -aG docker vagrant"
+    shell: "usermod -aG docker tim"
 
   # Installs Docker SDK
   # --
@@ -49,7 +47,7 @@
       name: python3-pip
 
   - name: install python sdk
-    become_user: "vagrant"
+    become_user: "tim"
     pip:
       executable: pip3
       extra_args: --upgrade

@@ -1,15 +1,13 @@
 ---
-- hosts: all
+- name: Start load testing
+  hosts: all
   gather_facts: yes
   become: yes
   tasks:
-    - name: Run a simple command (command)
-      community.docker.docker_container_exec:
-        container: client1
-        command: /bin/bash -c "./rip -concurrent 100 -interval 10 http://server:8000"
-        chdir: /demo_app/app
-      register: result
-
-    - name: Print stdout
-      debug:
-        var: result.stdout
+    - name: Run load tests
+      include_tasks: stats_loops.yml
+      loop:
+        - 100
+        - 500
+        - 1000
+        - 5000

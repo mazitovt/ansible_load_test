@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Run a docker stats
+      ansible.builtin.shell:
+        cmd: ./sc.sh
+        chdir: /home/tim/logs/

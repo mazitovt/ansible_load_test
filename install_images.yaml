@@ -3,34 +3,34 @@
   gather_facts: yes
   become: yes
   environment: 
-    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/vagrant/.local/lib/python3.6/site-packages"
+    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/tim/.local/lib/python3.6/site-packages"
   tasks:
     - name: copy Server
       copy:
         src: ./server
-        dest: /home/vagrant
-        owner: vagrant
-        group: vagrant
+        dest: /home/tim
+        owner: tim
+        group: tim
         mode: '0644'
     - name: copy Client
       copy:
         src: ./client
-        dest: /home/vagrant
-        owner: vagrant
-        group: vagrant
+        dest: /home/tim
+        owner: tim
+        group: tim
         mode: '0644' 
     - name: build server container image
       community.docker.docker_image:
         name: aos_server
         build:
-          path: /home/vagrant/server
+          path: /home/tim/server
         source: build
         state: present
     - name: build client container image
       community.docker.docker_image:
         name: aos_client_go
         build:
-          path: /home/vagrant/client
+          path: /home/tim/client
         force_source: yes
         source: build
         state: present
