@@ -11,3 +11,6 @@ func BenchmarkMain(b *testing.B) {
 	url := "http://" + *host + ":8000/"
 	ServerRequest(url, b.N)
 }
+
+// chmod +x ./rip
+// ./rip -concurrent 100 -interval 10 http://server:8000

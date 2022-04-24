@@ -11,11 +11,12 @@
           - name: mynet
             aliases:
               - server
-        ports:
-          - "8080:8000"
     - name: Create client container
       docker_container:
         name: client1
         image: aos_client_go
+        detach: yes
+        tty: yes
+        interactive: yes
         networks:
           - name: mynet

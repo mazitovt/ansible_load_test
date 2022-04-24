@@ -2,6 +2,8 @@
 - hosts: all
   
   become: yes
+  environment: 
+    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/vagrant/.local/lib/python3.6/site-packages"
   tasks:
 
   # Install Docker
@@ -15,6 +17,9 @@
         - curl 
         - gnupg-agent
         - software-properties-common
+        - python3-pip
+        - virtualenv
+        - python3-setuptools
       update_cache: yes
 
   - name: add apt-key
@@ -42,10 +47,12 @@
   - name: install python package manager
     apt:
       name: python3-pip
-  
+
   - name: install python sdk
     become_user: "vagrant"
     pip:
+      executable: pip3
+      extra_args: --upgrade
       name:
         - docker
         - docker-compose

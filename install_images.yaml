@@ -2,6 +2,8 @@
 - hosts: all
   gather_facts: yes
   become: yes
+  environment: 
+    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/vagrant/.local/lib/python3.6/site-packages"
   tasks:
     - name: copy Server
       copy:

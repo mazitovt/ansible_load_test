@@ -2,8 +2,13 @@ FROM golang:1.18
 
 WORKDIR /demo_app
 
-RUN apt-get update
-
 COPY ./app ./app
 
-CMD cd app/main && go test -bench=. -benchtime=10000x -benchmem -host server
+RUN apt-get update
+RUN cd app && chmod +x ./rip
+
+# TODO: -host should be server name or ip
+
+# CMD cd app/main && go test -bench=. -benchtime=1000x -benchmem -host server
+# CMD cd app && go test -bench=. -benchtime=1000x -benchmem -host server
+# CMD cd app && chmod +x ./rip
