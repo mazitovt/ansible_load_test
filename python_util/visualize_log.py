@@ -28,6 +28,7 @@ for k, v in test_cases.items():
     yAxis = v
     plt_lines.append(ax.plot(xAxis, yAxis, label = k)[0])
     line_labels.append(k)
+
     
 plt.ylabel('Использование ЦП, %')
 plt.xlabel('Время с начала теста, сек')
@@ -40,4 +41,19 @@ fig.legend(plt_lines,
 
 plt.subplots_adjust(right=0.85)
 
-plt.savefig('./img/cpu_usage_to_time.png')
+plt.savefig('./img/cpu_usage_to_time4.png')
+
+plt.clf()
+
+x = []
+y = []
+for k,v in test_cases.items():
+    x.append(str(k))
+    y.append(sum(v)/len(v))
+
+plt.title("Зависимость потредления ЦП от количества одновременных запросов")
+plt.bar(x,y, color=['red', 'blue', 'green'])
+plt.ylabel('Среднее использование ЦП, %')
+plt.xlabel('Количество одновременных запросов, шт')
+plt.savefig('./img/cpu_usage_bar.png')
+

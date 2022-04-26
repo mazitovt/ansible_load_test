@@ -11,4 +11,3 @@
       docker_container:
         name: client1
         state: absent
-

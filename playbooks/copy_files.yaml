@@ -1,0 +1,15 @@
+---
+- name: Copy files
+  hosts: all
+  gather_facts: yes
+  become: yes
+  vars:
+    base_path: "{{ playbook_dir | dirname}}"
+  tasks:
+    - name: Copy sc.sh
+      copy:
+        src: "{{ base_path }}/scripts/sc.sh"
+        dest: /home/tim/logs
+        owner: tim
+        group: tim
+        mode: '0777'

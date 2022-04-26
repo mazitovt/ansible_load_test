@@ -5,9 +5,8 @@
   become: yes
   tasks:
     - name: Run load tests
-      include_tasks: stats_loops.yml
+      include_tasks: testing_with_item.yaml
       loop:
         - 100
-        - 500
         - 1000
-        - 5000
+        - 10000

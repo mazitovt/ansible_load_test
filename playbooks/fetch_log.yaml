@@ -3,9 +3,11 @@
   hosts: all
   gather_facts: yes
   become: yes
+  vars:
+    base_path: "{{ playbook_dir | dirname}}"
   tasks:
     - name: Fetch log
       ansible.builtin.fetch:
         src: /home/tim/logs/log
-        dest: logs/log
+        dest: "{{ base_path   }}/logs/log"
         flat: yes

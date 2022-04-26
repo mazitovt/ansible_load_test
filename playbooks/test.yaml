@@ -1,0 +1,6 @@
+---
+
+- import_playbook: run_containers.yaml
+- import_playbook: start_testing.yaml
+- import_playbook: remove_containers.yaml
+- import_playbook: fetch_log.yaml

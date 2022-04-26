@@ -2,23 +2,27 @@
 - hosts: all
   gather_facts: yes
   become: yes
-  environment: 
-    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/tim/.local/lib/python3.6/site-packages"
+  # environment: 
+  #   PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/tim/.local/lib/python3.8/site-packages"
+  vars:
+    base_path: "{{ playbook_dir | dirname}}"
   tasks:
-    - name: copy Server
+    - name: Copy server
       copy:
-        src: ./server
+        src: "{{ base_path }}/server"
         dest: /home/tim
         owner: tim
         group: tim
         mode: '0644'
-    - name: copy Client
+
+    - name: Copy client
       copy:
-        src: ./client
+        src: "{{ base_path }}/client"
         dest: /home/tim
         owner: tim
         group: tim
-        mode: '0644' 
+        mode: '0644'
+
     - name: build server container image
       community.docker.docker_image:
         name: aos_server

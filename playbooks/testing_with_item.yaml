@@ -1,9 +1,5 @@
 ---
-- name: DB
-  debug: 
-    msg: "hey: {{ item }}"
-
-- name: Testing started
+- name: Testing with {{ item }} clients started
   ansible.builtin.shell:
     cmd: "echo ------ LOAD: {{ item }} clients ------>> log"
     chdir: /home/tim/logs/

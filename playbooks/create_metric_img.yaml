@@ -1,0 +1,12 @@
+---
+- name: Create metric image
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  environment:
+    PYTHONPATH: "{{ lookup('env','PYTHONPATH') }}: /home/tim/.local/lib/python3.8/site-packages"
+  tasks:
+    - name: Call python program
+      command:
+        cmd: python3 ./python_util/visualize_log.py
+        chdir: /home/tim/ansible_load_test/
